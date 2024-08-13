@@ -4,8 +4,9 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.json("Hola mundo");
-  ok: true;
+  res.json({
+    ok: true
+  });
 });
 
 app.listen(process.env.PORT, () => {
