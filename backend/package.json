@@ -1,6 +1,6 @@
 {
   "name": "meetus",
-  "version": "0.2",
+  "version": "0.2a",
   "main": "server/server.js",
   "scripts": {
     "backend": "node --watch server/server.js"

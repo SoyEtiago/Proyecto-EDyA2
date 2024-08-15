@@ -1,7 +1,7 @@
 {
   "name": "meetusvite",
   "private": true,
-  "version": "0.2",
+  "version": "0.2a",
   "type": "module",
   "scripts": {
     "dev": "vite",

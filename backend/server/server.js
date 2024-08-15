@@ -23,6 +23,7 @@ paths = {
     };
 */
 
+
 app.get("/", (req, res) => {
   res.status(200).json({
     text: "Bienvenido a la API de meetUs",
