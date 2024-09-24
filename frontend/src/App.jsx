@@ -1,6 +1,6 @@
 import {BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import Register from './page/register'
+import {Register} from './components/index.jsx'
 
 function App() {
 
