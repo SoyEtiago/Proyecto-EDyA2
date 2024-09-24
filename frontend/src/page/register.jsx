@@ -3,16 +3,15 @@ import { Form } from "react-bootstrap";
 import { Container } from "react-bootstrap";
 
 const Register = () => {
-    const [Username, setUsername] = useState('');
-    const [Email, setEmail] = useState('');
-    const [Password, setPassword] = useState('');
-    const {register} = useAuth();
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     return (
     <>
         <Container>
             <div>
-            <h1>sign in up MeetUs</h1>
+            <h1>Sign in up MeetUs</h1>
             <h6>Username</h6>
             <Form.Group controlId="formUsername">
             <Form.Label>Nombre de Usuario</Form.Label>
