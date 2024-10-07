@@ -4,6 +4,7 @@ require("dotenv").config(); //dotenv for using environment variables
 const express = require("express");
 const cors = require("cors");
 const { dbConnection } = require("../database/connection");
+const { initializeFirebaseConnection } = require("../database/firebaseConnection");
 
 const app = express();
 
@@ -13,7 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //dbConnection func call
-dbConnection();
+//dbConnection();
+
+// Firebase Connection fun call
+initializeFirebaseConnection();
 
 /*
 defined paths
