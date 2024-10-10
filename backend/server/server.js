@@ -1,41 +1,77 @@
-require("dotenv").config(); //dotenv for using environment variables
-
-//vars definition
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { dbConnection } = require("../database/connection");
 const { initializeFirebaseConnection } = require("../database/firebaseConnection");
+class Server {
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT || 4000;
+    this.server = require('http').createServer(this.app);
 
-const app = express();
+    this.paths = {
+      home: '/api/home',
+      login: '/api/login',
+      register: '/api/register'
+    }
 
-//middleware setup
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+    this.dbConnect();
+    this.middlewares();
+    this.setRoutes();
+    this.home();
+    this.invalidPathHandler();
+  }
 
-//dbConnection func call
-//dbConnection();
+  home() {
+    this.app.use('/home', (req, res) => {
+      res.status(200).json({
+        message: 'Welcome to the home route',
+      });
+    });
+  }
+  // This function helps us connect to Firebase
+  async dbConnect() {
+    initializeFirebaseConnection();
+  }
+  // This function adds middlewares to the server
+  middlewares() {
+    this.app.use(cors({
+      origin: ['localhost'], // allowed domains
+      methods: ['GET', 'POST'], // allowed methods
+      allowedHeaders: ['Content-Type', 'Authorization'] // allowed headers
+    }));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+  }
 
-// Firebase Connection fun call
-initializeFirebaseConnection();
+  // This function sets the routes for the server
+  setRoutes() {
+    this.app.use(this.paths.home, require('../routes/home'));
+    this.app.use(this.paths.login, require('../routes/auth'));
+    this.app.use(this.paths.register, require('../routes/auth'));
 
-/*
-defined paths
-paths = {
-     home: "/home",
-     login: "/login",
-    };
-*/
+  }
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    text: "Bienvenido a la API de meetUs",
-  });
-});
+  invalidPathHandler() {
+    // Middleware to handle invalid paths
+    this.app.use((req, res, next) => {
+      res.status(404).json({
+        error: '404 NOT FOUND',
+        message: 'The requested resource could not be found'
+      });
+    });
+  }
 
-//Server start
-app.listen(process.env.PORT || 4000, () => {
-  console.log(
-    `v${process.env.VER} instance running @ port ${process.env.PORT}`
-  );
-});
+
+
+  listen() {
+    try{
+      this.app.listen(this.port || 4000, () => {
+        console.log(`Server running on port ${this.port}`);
+      });
+    }catch (error) {
+      console.error(`Error connecting to Firebase: ${error}`);
+    }
+  }
+}
+
+module.exports = Server;

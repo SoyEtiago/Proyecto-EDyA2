@@ -29,10 +29,6 @@ const usuarioSchema = Schema(
     rol: {
       type: String,
     },
-
-    rol: {
-      type: String,
-    },
   },
 
   { timestamps: true }
