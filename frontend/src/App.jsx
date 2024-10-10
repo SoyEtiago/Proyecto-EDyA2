@@ -1,16 +1,18 @@
-import {BrowserRouter, Route, Routes } from 'react-router-dom'
-import './App.css'
-import {Register} from './components/index.jsx'
-
+import React, { useState } from 'react';
+import Login from './page/Login';
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/register" element={<Register />} />
-    </Routes>
-  </BrowserRouter>
-  )
+    <div>
+      {isLoggedIn ? (
+        <h1>Bienvenido, has iniciado sesión correctamente!</h1>
+      ) : (
+        <Login onLogin={setIsLoggedIn} />
+      )}
+
+    </div>
+  );
 }
 
-export default App
+export default App;
