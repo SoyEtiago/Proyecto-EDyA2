@@ -7,10 +7,11 @@ const serviceAccount = JSON.parse(SERVICE_ACCOUNT);
 const initializeFirebaseConnection = () => {
   try {
     if (!getApps().length) {
-      initializeApp({
+      const app = initializeApp({
         credential: cert(serviceAccount),
       });
       console.log(`Firebase Admin SDK connection established`);
+      return {app};
     } else {
       console.log("Firebase Admin SDK already initialized.");
     }

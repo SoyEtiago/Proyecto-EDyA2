@@ -10,15 +10,14 @@ class Server {
 
     this.paths = {
       home: '/api/home',
-      login: '/api/login',
-      register: '/api/register'
-    }
+      auth: '/api/auth',
+    };
 
-    this.dbConnect();
+    // this.dbConnect();
     this.middlewares();
     this.setRoutes();
     this.home();
-    this.invalidPathHandler();
+    // this.invalidPathHandler();
   }
 
   home() {
@@ -29,9 +28,9 @@ class Server {
     });
   }
   // This function helps us connect to Firebase
-  async dbConnect() {
-    initializeFirebaseConnection();
-  }
+  // async dbConnect() {
+  //   initializeFirebaseConnection();
+  // }
   // This function adds middlewares to the server
   middlewares() {
     this.app.use(cors({
@@ -46,20 +45,19 @@ class Server {
   // This function sets the routes for the server
   setRoutes() {
     this.app.use(this.paths.home, require('../routes/home'));
-    this.app.use(this.paths.login, require('../routes/auth'));
-    this.app.use(this.paths.register, require('../routes/auth'));
+    this.app.use(this.paths.auth, require('../routes/auth'));
 
   }
 
-  invalidPathHandler() {
-    // Middleware to handle invalid paths
-    this.app.use((req, res, next) => {
-      res.status(404).json({
-        error: '404 NOT FOUND',
-        message: 'The requested resource could not be found'
-      });
-    });
-  }
+  // invalidPathHandler() {
+  //   // Middleware to handle invalid paths
+  //   this.app.use((req, res, next) => {
+  //     res.status(404).json({
+  //       error: '404 NOT FOUND',
+  //       message: 'The requested resource could not be found'
+  //     });
+  //   });
+  // }
 
 
 
