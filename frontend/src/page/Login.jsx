@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../assets/ProjectCSS/Login.css'
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
@@ -13,7 +14,6 @@ function Login({ onLogin }) {
     e.preventDefault();
     console.log("Email:", email, "Password:", password, "Remember me:", rememberMe);
 
-    // Aquí podrías agregar tu lógica de autenticación real
     if (email && password) {
       onLogin(true); // Actualiza el estado de inicio de sesión en App.jsx
       navigate('/'); // Redirige a la página de inicio
