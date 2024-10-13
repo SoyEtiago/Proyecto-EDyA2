@@ -1,16 +1,11 @@
-import React, { useState } from 'react';
-import './HomePage.css';
-import Modal from 'react-modal';
-import Login from './page/Login';
-
-Modal.setAppElement('#root');
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HomePage() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="homepage-container">
-      {/* Barra de Navegación */}
       <nav className="navbar">
         <div className="navbar-logo">TuLogo</div>
         <div className="navbar-search">
@@ -18,7 +13,7 @@ function HomePage() {
           <button className="search-btn">Buscar</button>
         </div>
         <div className="navbar-buttons">
-          <button className="login-btn" onClick={() => setModalIsOpen(true)}>Iniciar sesión</button>
+          <button className="login-btn" onClick={() => navigate('/login')}>Iniciar sesión</button>
           <button className="register-btn">Registrarse</button>
         </div>
       </nav>
@@ -49,13 +44,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Modal de inicio de sesión */}
-      <Modal isOpen={modalIsOpen} onRequestClose={() => setModalIsOpen(false)}>
-        <Login />
-        <button onClick={() => setModalIsOpen(false)} style={{ marginTop: '20px' }}>Cerrar</button>
-      </Modal>
-
-      {/* Pie de Página */}
       <footer className="footer">
         <p>&copy; 2024 TuPlataforma - Todos los derechos reservados</p>
       </footer>

@@ -1,14 +1,25 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    e.preventDefault();
     console.log("Email:", email, "Password:", password, "Remember me:", rememberMe);
+
+    // Aquí podrías agregar tu lógica de autenticación real
+    if (email && password) {
+      onLogin(true); // Actualiza el estado de inicio de sesión en App.jsx
+      navigate('/'); // Redirige a la página de inicio
+    } else {
+      alert('Por favor, ingresa tus credenciales.');
+    }
   };
 
   return (
