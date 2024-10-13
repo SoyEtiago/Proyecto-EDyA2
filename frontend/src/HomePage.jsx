@@ -3,7 +3,7 @@ import './HomePage.css';
 import Modal from 'react-modal';
 import Login from './page/Login';
 
-Modal.setAppElement('#root'); // Esto es necesario para la accesibilidad al usar React Modal
+Modal.setAppElement('#root');
 
 function HomePage() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
