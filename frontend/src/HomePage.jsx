@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './HomePage.css';
+// import './HomePage.css';
 import Modal from 'react-modal';
 import Login from './page/Login';
 
