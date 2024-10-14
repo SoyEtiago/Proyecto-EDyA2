@@ -1,12 +1,16 @@
 require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
-const requestLog = require('./middleware/reqLog')
+const { dbConnection } = require('./db/dbConnection')
+const requestLog = require('./middlewares/reqLog')
 const homeRoute = require('./routes/homeRoute')
-const authRoute = require('./routes/authRoute')
+const authRoutes = require('./routes/authRoute')
+const eventoRoutes = require('./routes/eventoRoute')
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+dbConnection();
 
 app.use([
   requestLog,
@@ -20,7 +24,9 @@ app.use([
 ]);
 
 app.use('/api/home', homeRoute);
-app.use('/api/auth', authRoute);
+app.use('/api/auth', authRoutes);
+// Rutas de eventos
+app.use('/api/events', eventoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
