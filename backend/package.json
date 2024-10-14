@@ -1,9 +1,9 @@
 {
   "name": "meetus",
   "version": "0.2a",
-  "main": "server/server.js",
+  "main": "app.js",
   "scripts": {
-    "backend": "node --watch main.js"
+    "backend": "node --watch app.js"
   },
   "keywords": [],
   "author": "Etienne Samboni, Nicolas Gonzalez, Maryori Lasso and Sebastian Balanta",
@@ -16,7 +16,6 @@
     "express": "^4.21.0",
     "express-validator": "^7.2.0",
     "firebase": "^10.14.0",
-    "firebase-admin": "^12.6.0",
     "mongoose": "^8.5.3"
   }
 }

@@ -1,23 +1,24 @@
-require("dotenv").config();
-const { SERVICE_ACCOUNT } = process.env;
-const { initializeApp, cert, getApps } = require('firebase-admin/app');
+require('dotenv').config()
+const { API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGINGSENDER_ID, APP_ID, MEASUREMENT_ID} = process.env
+const { initializeApp } = require('firebase/app')
 
-const serviceAccount = JSON.parse(SERVICE_ACCOUNT);
-
-const initializeFirebaseConnection = () => {
-  try {
-    if (!getApps().length) {
-      const app = initializeApp({
-        credential: cert(serviceAccount),
-      });
-      console.log(`Firebase Admin SDK connection established`);
-      return {app};
-    } else {
-      console.log("Firebase Admin SDK already initialized.");
-    }
-  } catch (error) {
-    console.error(`Error connecting to Firebase Admin SDK: ${error}`);
-  }
+const firebaseConfig  = {
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGINGSENDER_ID,
+  appId: APP_ID,
+  measurementId: MEASUREMENT_ID
 };
 
-module.exports = { initializeFirebaseConnection };
+let app;
+
+try {
+  app = initializeApp(firebaseConfig);
+  console.log('Firebase SDK connection established');
+} catch (error) {
+  console.error(`Error connecting to Firebase SDK: ${error.message}`);
+}
+
+module.exports = app
