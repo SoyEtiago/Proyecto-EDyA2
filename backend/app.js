@@ -20,7 +20,7 @@ app.use([
     allowedHeaders: ['Content-Type', 'Authorization'] // allowed headers
   }),
   express.json(),
-  express.urlencoded({ extended: true }),
+  express.urlencoded({ extended: true })
 ]);
 
 app.use('/api/home', homeRoute);
