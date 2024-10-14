@@ -12,7 +12,7 @@ const eventoSchema = new Schema({
   },
   organizadorId: {
     type: Schema.Types.ObjectId,
-    ref: 'usuario',
+    ref: 'usuarios',
     required: true,
   },
   tipo: {
@@ -52,7 +52,7 @@ const eventoSchema = new Schema({
       usuario_id: {
         type: String,
         required: true,
-        ref: 'usuario'
+        ref: 'usuarios'
       },
       nombre: {
         type: String,
@@ -77,7 +77,7 @@ const eventoSchema = new Schema({
       usuarioId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'usuario'
+        ref: 'usuarios'
       },
       calificacion: {
         type: mongoose.Decimal128,
@@ -99,7 +99,7 @@ const eventoSchema = new Schema({
       usuarioId: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'usuario'
+        ref: 'usuarios'
       },
       pregunta: {
         type: String,
@@ -110,7 +110,7 @@ const eventoSchema = new Schema({
           organizadorId: {
             type: Schema.Types.ObjectId,
             required: true,
-            ref: 'usuario'
+            ref: 'usuarios'
           },
           respuesta: {
             type: String,

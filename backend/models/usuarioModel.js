@@ -25,13 +25,13 @@ const userSchema = new mongoose.Schema({
     enum: ['Organizador', 'Participante'],
     default: 'Participante',
   },
-  EventosRegistrados: [{
+  eventosRegistrados: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'evento',
+    ref: 'eventos',
   }],
-  EventosCreados: [{
+  eventosCreados: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'evento',
+    ref: 'eventos',
   }],
   imagenPerfil: {
     type: String,
