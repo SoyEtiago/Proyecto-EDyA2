@@ -4,6 +4,8 @@ import HomePage from './page/HomePage';
 import Login from './page/Login';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
     <Router>
       <Routes>
