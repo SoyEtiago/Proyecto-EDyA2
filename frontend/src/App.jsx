@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import Login from './page/Login';
+//import { useState } from 'react';
+//import Login from './page/Login';
+import HomePage from './page/HomePage';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <div>
-      {isLoggedIn ? (
-        <h1>Bienvenido, has iniciado sesión correctamente!</h1>
-      ) : (
-        <Login onLogin={setIsLoggedIn} />
-      )}
-
+      <HomePage/>
     </div>
   );
 }
+//const [isLoggedIn, setIsLoggedIn] = useState(false);
+//{isLoggedIn ? (
+//  <h1>Bienvenido, has iniciado sesión correctamente!</h1>
+//) : (
+//  <Login onLogin={setIsLoggedIn} />
+//)}
+
 
 export default App;
