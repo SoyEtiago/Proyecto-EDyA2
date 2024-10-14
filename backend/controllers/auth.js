@@ -1,69 +1,76 @@
-require("dotenv").config();
-const { SERVICE_ACCOUNT } = process.env;
-const { initializeFirebaseConnection } = require('../database/firebaseConnection');
-const { initializeApp: initializeClientApp, getApps: getClientApps } = require('firebase/app');
-const { check, validationResult } = require('express-validator');
-const admin = require('firebase-admin');
+require('dotenv').config();
+const { firebaseApp } = require('../database/firebaseConnection');
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } = require('firebase/auth');
+const { body, validationResult } = require('express-validator');
 
-// Initialize Firebase Admin SDK
-initializeFirebaseConnection();
+const auth = getAuth(firebaseApp);
 
-// Initialize Firebase Client SDK only if it's not already initialized
-const serviceAccount = JSON.parse(SERVICE_ACCOUNT);
-
-if (!getClientApps().length) {
-  initializeClientApp(serviceAccount);
-  console.log("Firebase Client SDK initialized.");
-} else {
-  console.log("Firebase Client SDK already initialized.");
-}
-
-const auth = admin.auth();
-
-// FIREBASE REGISTER
-const registerUser = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    // Use Admin SDK to create a new user
-    const userRecord = await auth.createUser({
-      email: email,
-      password: password,
-    });
-    res.status(201).json({ message: 'User registered successfully', userRecord });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ message: 'Error registering user', error: error.message });
+// Helper function for Firebase error handling
+const getFirebaseErrorMessage = (errorCode) => {
+  switch (errorCode) {
+    case 'auth/email-already-in-use':
+      return { message: 'The email address is already registered.', status: 409 };
+    case 'auth/invalid-email':
+      return { message: 'The email address format is invalid.', status: 400 };
+    case 'auth/password-does-not-meet-requirements':
+      return { message: 'The password is too weak or does not meet the required criteria. Please use a stronger one.', status: 400 };
+    case 'auth/user-not-found':
+      return { message: 'No user found with this email.', status: 404 };
+    case 'auth/wrong-password':
+      return { message: 'Incorrect password. Please try again.', status: 401 };
+    case 'auth/invalid-credential':
+      return { message: 'Invalid credentials. Please try again.', status: 400 };
+    default:
+      return { message: 'An unexpected error occurred.', status: 500 };
   }
 };
 
-const validateLoginInput = [
-  check('email').isEmail().withMessage('Please provide a valid email address'),
-  check('password').not().isEmpty().withMessage('Password cannot be empty'),
+// Middleware for registration validation
+const validateRegister = [
+  body('email').isEmail().withMessage('Please provide a valid email address.'),
+  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long.'),
 ];
 
-// Firebase login function
-const loginUser = async (req, res) => {
-  // Validate the input first
+// Middleware for login validation
+const validateLogin = [
+  body('email').isEmail().withMessage('Please provide a valid email address.'),
+  body('password').notEmpty().withMessage('Password cannot be empty.'),
+];
+
+// FIREBASE REGISTER
+const registerEmailPassword = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ message: 'Validation failed.', errors: errors.array() });
   }
 
   const { email, password } = req.body;
-  console.log(email);
 
   try {
-    const userRecord = await auth.getUserByEmail(email);
-    if (userRecord) {
-      // Generate a custom token for the user to use on the client-side
-      const customToken = await auth.createCustomToken(userRecord.uid);
-      res.status(200).json({ message: 'Login successful', customToken });
-    }
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return res.status(201).json({ message: 'User registered successfully.', user: userCredential.user });
   } catch (error) {
-    console.error('Error logging in user:', error);
-    res.status(500).json({ message: 'Error logging in', error: error.message });
+    const { message, status } = getFirebaseErrorMessage(error.code);
+    return res.status(status).json({ message, errorCode: error.code });
   }
 };
 
-module.exports = { registerUser, loginUser };
+// FIREBASE LOGIN
+const loginEmailPassword = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ message: 'Validation failed.', errors: errors.array() });
+  }
+
+  const { email, password } = req.body;
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return res.status(200).json({ message: 'User logged in successfully.', user: userCredential.user });
+  } catch (error) {
+    const { message, status } = getFirebaseErrorMessage(error.code);
+    return res.status(status).json({ message, errorCode: error.code });
+  }
+};
+
+module.exports = { registerEmailPassword, loginEmailPassword, validateRegister, validateLogin };
