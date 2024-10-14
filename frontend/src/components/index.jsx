@@ -1,7 +1,8 @@
 export {default as Register} from '../page/register.jsx';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import '../assets/ProjectCSS/Login.css';
+import '../assets/ProjectCSS/Homepage.css';
 import Login from './Login.jsx';
 import reportWebVitals from './reportWebVitals';
 
