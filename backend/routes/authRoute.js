@@ -1,8 +1,9 @@
 const express = require('express')
-const { check } = require('express-validator')
+// const { check } = require('express-validator') NOT BEING USED
 const router = express.Router()
 
-const { registerEmailPassword, loginEmailPassword, validateRegister, validateLogin } = require('../controllers/authController');
+const { registerEmailPassword, loginEmailPassword } = require('../controllers/authController');
+const {validateRegister, validateLogin} = require('../middlewares/authMiddleware');
 
 // Route to register a new user
 router.post(
