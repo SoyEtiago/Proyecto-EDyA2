@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+//import { useState } from 'react';
+//import Login from './page/Login';
 import HomePage from './page/HomePage';
-import Login from './page/Login';
-
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
-      </Routes>
-      {isLoggedIn && <h1>Bienvenido, has iniciado sesión correctamente!</h1>}
-    </Router>
+    <div>
+      <HomePage/>
+    </div>
   );
 }
+//const [isLoggedIn, setIsLoggedIn] = useState(false);
+//{isLoggedIn ? (
+//  <h1>Bienvenido, has iniciado sesión correctamente!</h1>
+//) : (
+//  <Login onLogin={setIsLoggedIn} />
+//)}
+
 
 export default App;
