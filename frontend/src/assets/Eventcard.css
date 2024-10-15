@@ -1,0 +1,28 @@
+
+.cardEvent{
+  margin: auto;
+  background: #fff;
+  border: 5px solid;
+  border-color: #fdba74;
+  padding: 10px;
+  border-radius: 15px;
+  width: 20%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.CE_title{
+  font-family: Andale Mono, monospace;
+  font-size: 200%;
+  text-decoration: underline;
+}
+
+.CE_description{
+  font-family: "Patua One", serif;
+  font-size: 110%;
+}
+
+.CE_span{
+  font-family: Andale Mono, monospace;
+  font-size: 100%;
+}
+

@@ -1,0 +1,80 @@
+.Homepage{
+  text-align: center;
+  padding: 40px;
+  font-family: 'Arial', sans-serif;
+}
+
+.navbar {
+  position:sticky;
+  background-color:white;
+  left: 0;
+  padding: 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.card_homPa{
+  background-color: #fdba74;
+  padding: 20px;
+  h1{font-size: 400%};
+  h1{font-family: Andale Mono, monospace};
+  p{font-family: Andale Mono, monospace};
+  p{font-size: 110%};
+  margin: 30px auto;
+  font-size: 20px;
+  color: #503e69;
+  font-family: Arial Narrow, sans-serif;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search_button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 600px;
+
+}
+.button_session {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 10px;
+  margin-right: 0px;
+}
+.button_regis {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 195px;
+  margin-right: 0px;
+}
+
+.title_homPa{
+  color: rgb(255, 252, 252);
+  h1{font-size: 500%};
+  font-family: Andale Mono, monospace;
+  font-weight: 400%;
+  font-size: 400%;
+  width: 100%;
+}
+
+.search_bar{
+    padding:6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    font-family: Arial Narrow, sans-serif;
+}
+
+.nearEvent{
+  h1{font-size: 400%};
+  h1{font-family: Andale Mono, monospace};
+  h1{color: #503e69};
+  margin-top: 50px;
+}

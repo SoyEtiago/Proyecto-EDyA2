@@ -1,51 +1,39 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+//import React from 'react';
+import Button from 'react-bootstrap/Button';
+import '../assets/Homepage.css'
+import { Card, Navbar } from "react-bootstrap";
+import Event from '../components/Event';
 
 function HomePage() {
-  const navigate = useNavigate();
-
   return (
-    <div className="homepage-container">
-      <nav className="navbar">
-        <div className="navbar-logo">TuLogo</div>
-        <div className="navbar-search">
-          <input type="text" placeholder="Buscar eventos" />
-          <button className="search-btn">Buscar</button>
-        </div>
-        <div className="navbar-buttons">
-          <button className="login-btn" onClick={() => navigate('/login')}>Iniciar sesión</button>
-          <button className="register-btn">Registrarse</button>
-        </div>
-      </nav>
-
+    <div className="Homepage">
+      <Navbar>
+          <div className="navbar-buttons">
+            <input className='search_bar'type="text" placeholder="Buscar eventos" />
+            <Button variant="outline-danger" className='search_button'>Buscar</Button>{' '}
+            <Button variant="outline-danger" className='button_regis'>Registrarse</Button>{' '}
+            <Button variant="outline-danger" className='button_session'>Iniciar sesion</Button>{' '}
+          </div>
+      </Navbar>
       {/* Sección Principal */}
-      <header className="main-header">
-        <h1>La plataforma de las personas: donde los intereses se convierten en amistades</h1>
-        <p>
-          Encuentra eventos de tu interés, conéctate con personas y participa en actividades locales y en línea.
-        </p>
-        <button className="primary-btn">Unirse ahora</button>
-      </header>
+      <Card className='card_homPa'>
+        <header className="main-header">
+          <h1 >MeetUs</h1>
+          <p>
+            Encuentra eventos de tu interés, conéctate con personas y participa en actividades locales y en línea.
+          </p>
+        </header>
+      </Card>
 
       {/* Lista de eventos cercanos */}
-      <section className="events-nearby">
-        <h2>Eventos cerca de ti</h2>
-        <div className="events-container">
-          <div className="event-card">
-            <img src="ruta-del-evento1.jpg" alt="Evento 1" />
-            <h3>Evento 1</h3>
-            <p>Detalles del evento 1</p>
-          </div>
-          <div className="event-card">
-            <img src="ruta-del-evento2.jpg" alt="Evento 2" />
-            <h3>Evento 2</h3>
-            <p>Detalles del evento 2</p>
-          </div>
-        </div>
+      <section className="nearEvent">
+        <h1>Eventos cerca de ti</h1>
+        <Event/>
       </section>
 
+
       <footer className="footer">
-        <p>&copy; 2024 TuPlataforma - Todos los derechos reservados</p>
+        <p>&copy; 2024 MEETUS - Todos los derechos reservados</p>
       </footer>
     </div>
   );
