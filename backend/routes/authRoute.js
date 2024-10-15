@@ -1,5 +1,4 @@
 const express = require('express')
-// const { check } = require('express-validator') NOT BEING USED
 const router = express.Router()
 
 const { registerEmailPassword, loginEmailPassword } = require('../controllers/authController');
