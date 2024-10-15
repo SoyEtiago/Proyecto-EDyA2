@@ -1,22 +1,18 @@
-//import { useState } from 'react';
-//import Login from './page/Login';
-//import HomePage from './page/HomePage';
-import Informacion from './page/infoEvento';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './page/HomePage';
+import Login from './page/Login';
+import Register from './page/Register';
 function App() {
-
-  return (
-    <div>
-      <Informacion/>
-    </div>
+	return (
+		<Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login onLogin={() => setIsLoggedIn(true)} />} />
+        <Route path="/register" element={<Register/>} />
+      </Routes>
+		</Router>
   );
 }
-//const [isLoggedIn, setIsLoggedIn] = useState(false);
-//{isLoggedIn ? (
-//  <h1>Bienvenido, has iniciado sesión correctamente!</h1>
-//) : (
-//  <Login onLogin={setIsLoggedIn} />
-//)}
-
 
 export default App;
