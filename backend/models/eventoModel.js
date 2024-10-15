@@ -12,6 +12,7 @@ const eventoSchema = new Schema({
   },
   organizadorId: {
     type: Schema.Types.ObjectId,
+    ref: 'usuario',
     required: true,
   },
   tipo: {
@@ -51,6 +52,7 @@ const eventoSchema = new Schema({
       usuario_id: {
         type: String,
         required: true,
+        ref: 'usuario'
       },
       nombre: {
         type: String,
@@ -75,6 +77,7 @@ const eventoSchema = new Schema({
       usuarioId: {
         type: Schema.Types.ObjectId,
         required: true,
+        ref: 'usuario'
       },
       calificacion: {
         type: mongoose.Decimal128,
@@ -87,6 +90,7 @@ const eventoSchema = new Schema({
       fechaHora: {
         type: Date,
         required: true,
+        default: Date.now
       },
     },
   ],
@@ -95,6 +99,7 @@ const eventoSchema = new Schema({
       usuarioId: {
         type: Schema.Types.ObjectId,
         required: true,
+        ref: 'usuario'
       },
       pregunta: {
         type: String,
@@ -105,6 +110,7 @@ const eventoSchema = new Schema({
           organizadorId: {
             type: Schema.Types.ObjectId,
             required: true,
+            ref: 'usuario'
           },
           respuesta: {
             type: String,
@@ -113,17 +119,19 @@ const eventoSchema = new Schema({
           fechaHora: {
             type: Date,
             required: true,
+            default: Date.now
           },
         },
       ],
       fechaHora: {
         type: Date,
         required: true,
+        default: Date.now
       },
     },
   ],
-});
+} , { timestamps: true });
 
-const Evento = mongoose.model("Evento", eventoSchema);
+const Evento = mongoose.model("evento", eventoSchema);
 
 module.exports = Evento;
