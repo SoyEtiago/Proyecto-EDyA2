@@ -17,7 +17,7 @@
     "firebase": "^10.14.0",
     "fortawesome": "^0.0.1-security",
     "react": "^18.3.1",
-    "react-bootstrap": "^2.10.4",
+    "react-bootstrap": "^2.10.5",
     "react-dom": "^18.3.1",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.27.0"
