@@ -33,6 +33,7 @@ const getFirebaseErrorMessage = (errorCode) => {
 };
 
 // FIREBASE REGISTER AND CREATE USER IN MONGODB
+//TODO: Quitar del register el JWT
 const registerEmailPassword = async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
