@@ -28,8 +28,6 @@
 }
 
 .search_button {
-  background-color:#fdba74;
-  color:#503e69;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -38,15 +36,23 @@
   margin-right: 600px;
 
 }
-.button {
-  background-color:#fdba74;
-  color:#503e69;
+.button_session {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   margin-left: 10px;
+  margin-right: 0px;
+}
+.button_regis {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 195px;
+  margin-right: 0px;
 }
 
 .title_homPa{
@@ -59,7 +65,7 @@
 }
 
 .search_bar{
-    padding:10px;
+    padding:6px;
     border: 1px solid #ccc;
     border-radius: 5px;
     width: 300px;
@@ -70,4 +76,5 @@
   h1{font-size: 400%};
   h1{font-family: Andale Mono, monospace};
   h1{color: #503e69};
+  margin-top: 50px;
 }

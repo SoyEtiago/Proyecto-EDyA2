@@ -10,9 +10,9 @@ function HomePage() {
       <Navbar>
           <div className="navbar-buttons">
             <input className='search_bar'type="text" placeholder="Buscar eventos" />
-            <Button className="search_button">Buscar</Button>
-            <Button className='button'>Iniciar sesion</Button>
-            <Button className='button'>Registrarse</Button>
+            <Button variant="outline-danger" className='search_button'>Buscar</Button>{' '}
+            <Button variant="outline-danger" className='button_regis'>Registrarse</Button>{' '}
+            <Button variant="outline-danger" className='button_session'>Iniciar sesion</Button>{' '}
           </div>
       </Navbar>
       {/* Sección Principal */}
