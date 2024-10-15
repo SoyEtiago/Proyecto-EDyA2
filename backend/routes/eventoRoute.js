@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/eventoController');
-const authMiddleware = require('../middlewares/authMiddleware');
+const {authMiddleware, validateLogin, validateRegister} = require('../middlewares/authMiddleware');
 
 router.use(authMiddleware)
 // Crear un evento (requiere autenticación)
