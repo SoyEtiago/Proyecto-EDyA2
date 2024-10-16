@@ -1,32 +1,37 @@
+const mongoose = require('mongoose')
 const { validationResult } = require('express-validator');
 const Evento = require('../models/eventoModel');
 const Usuario = require('../models/usuarioModel')
 
 const crearEvento = async (req, res) => {
-  // Validar los datos del cuerpo de la solicitud
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ message: 'Errores de validación', errors: errors.array() });
   }
 
-  const {
-    nombre,
-    descripcion,
-    organizadorId,
-    tipo,
-    fechaHoraInicio,
-    fechaHoraFin,
-    lugar,
-    linkOnline,
-    categoria,
-    capacidadAsistentes,
-    precio,
-  } = req.body;
+  const session = await mongoose.startSession(); // Iniciar la sesión para la transacción
+  session.startTransaction(); // Iniciar la transacción
 
   try {
+    const {
+      nombre,
+      descripcion,
+      organizadorId,
+      tipo,
+      fechaHoraInicio,
+      fechaHoraFin,
+      lugar,
+      linkOnline,
+      categoria,
+      capacidadAsistentes,
+      precio,
+    } = req.body;
+
     // Verificar que el organizador existe y obtener el usuario
-    const organizador = await Usuario.findById(organizadorId);
+    const organizador = await Usuario.findById(organizadorId).session(session);
     if (!organizador) {
+      await session.abortTransaction(); // Revertir la transacción
+      session.endSession();
       return res.status(404).json({ message: 'Organizador no encontrado' });
     }
 
@@ -44,22 +49,26 @@ const crearEvento = async (req, res) => {
       precio,
     });
 
-    await nuevoEvento.save();
+    // Guardar el evento en la base de datos dentro de la transacción
+    await nuevoEvento.save({ session });
 
-
-    //TODO: Agregar  EventosCreados: []
-    // Actualizar el documento del organizador para agregar el ID del evento a eventosCreados
+    // Actualizar el organizador para agregar el ID del evento creado
     await Usuario.findByIdAndUpdate(organizadorId, {
-      $push: { eventosCreados: nuevoEvento._id }, // Agregar el ID del nuevo evento
-    });
+      $push: { eventosCreados: nuevoEvento._id }
+    }, { session });
+
+    await session.commitTransaction();
+    session.endSession();
 
     return res.status(201).json({
       message: 'Evento creado exitosamente',
       event: nuevoEvento,
     });
   } catch (error) {
-    // Manejo de errores más detallado
-    console.error(error); // Log en servidor
+    // En caso de error, se revierte la transacción
+    await session.abortTransaction();
+    session.endSession();
+
     return res.status(500).json({
       message: 'Error interno del servidor al crear el evento',
       error: error.message,

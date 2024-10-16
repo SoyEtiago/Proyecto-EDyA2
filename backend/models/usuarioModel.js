@@ -25,13 +25,13 @@ const userSchema = new mongoose.Schema({
     enum: ['Organizador', 'Participante'],
     default: 'Participante',
   },
-  EventosRegistrados: [{
+  eventosRegistrados: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'evento',
+    ref: 'eventos',
   }],
-  EventosCreados: [{
+  eventosCreados: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'evento',
+    ref: 'eventos',
   }],
   imagenPerfil: {
     type: String,
@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Usuario = mongoose.model('usuario', userSchema);
+const Usuario = mongoose.model('usuarios', userSchema);
 
 module.exports = Usuario;
 

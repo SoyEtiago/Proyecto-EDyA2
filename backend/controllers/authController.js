@@ -39,33 +39,38 @@ const registerEmailPassword = async (req, res) => {
     return res.status(400).json({ message: 'Validation failed.', errors: errors.array() });
   }
 
-  const { nombre, username, email, password, rol = 'Participante' } = req.body; // Se puede definir un rol por defecto
-  const hashedPassword = await bcrypt.hash(password, 10); // Hashear la contraseña antes de registrarla
-  const token = generateJWT(userCredential.user.uid); // Generate JWT
+  const { nombre, username, email, password, rol = 'Participante' } = req.body;
 
+  let userCredential;
+
+  try {
+    // Registrar el usuario en Firebase
+    userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+  } catch(error){
+    const { message, status } = getFirebaseErrorMessage(error.code);
+    return res.status(status || 500).json({ message: message || error.message, errorCode: error.code });
+  }
+
+  // Hashear la contraseña antes de guardarla en MongoDB
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  // Crear un nuevo usuario en MongoDB con el uid de Firebase
   const newUser = new User({
     nombre,
     username,
     email,
     rol,
-    hashedPassword, // Almacenar la contraseña hasheada
-    firebaseId: userCredential.user.uid // Guardar el uid de Firebase
+    hashedPassword,
+    firebaseId: userCredential.user.uid,
   });
 
   try {
     // Crear el usuario en MongoDB con la contraseña hasheada
     await newUser.save();
 
-    try {
-      // Registrar el usuario en Firebase
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-
-    }catch(error){
-      const { message, status } = getFirebaseErrorMessage(error.code);
-      return res.status(status || 500).json({ message: message || error.message, errorCode: error.code });
-    }
-    // Retornar el token y el usuario registrado
-    return res.status(201).json({ message: 'User registered successfully.', token, user: newUser });
+    // Retornar el usuario registrado
+    return res.status(201).json({ message: 'User registered successfully.', user: newUser });
 
   } catch (error) {
       return res.status(500).json({ message: 'Error registering user.', error: error.message });
@@ -82,24 +87,27 @@ const loginEmailPassword = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Buscar el usuario en MongoDB
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: 'No user found with this email.' });
-    }
+    // Usar Firebase para autenticar al usuario
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-    // Verificar la contraseña hasheada
-    const passwordMatch = await bcrypt.compare(password, user.hashedPassword);
-    if (!passwordMatch) {
-      return res.status(401).json({ message: 'Incorrect password. Please try again.' });
+    // El uid del usuario autenticado
+    const firebaseId = userCredential.user.uid;
+
+    // Opcional: Puedes buscar el usuario en MongoDB para obtener más información
+    const user = await User.findOne({ firebaseId });
+    if (!user) {
+      return res.status(404).json({ message: 'No user found in the database.' });
     }
 
     // Generar el token JWT
-    const token = generateJWT(user.firebaseId);
-    return res.status(200).json({ message: 'User logged in successfully.', token });
+    const token = generateJWT(firebaseId);
+
+    return res.status(200).json({ message: 'User logged in successfully.', token, user });
   } catch (error) {
-    return res.status(500).json({ message: 'Error logging in.', error: error.message });
+    const firebaseError = getFirebaseErrorMessage(error.code);
+    return res.status(firebaseError.status).json({ message: firebaseError.message });
   }
 };
+
 
 module.exports = { registerEmailPassword, loginEmailPassword };
