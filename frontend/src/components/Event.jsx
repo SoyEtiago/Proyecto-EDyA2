@@ -33,7 +33,7 @@ const Event = ({ nombre, descripcion, organizadorId, tipo, fechaHoraInicio, fech
           <span className='CE_span'>Valoracion:</span> {valoraciones}
         </div>
       </Card.Footer>
-      <Button variant="outline-danger">Info Evento</Button>{' '}
+      <Button variant="outline-danger" href='/infoEvento'>Info Evento</Button>{' '}
     </Card>
   );
 };
