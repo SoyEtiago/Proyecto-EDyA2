@@ -126,10 +126,22 @@ const obtenerEventoPorId = async (req, res) => {
 //   }
 // };
 
+const registrarParticipante = async (req, res) => {
+  const {eventoId, participanteId} = req.body;
+
+  const evento = await Evento.findById(eventoId);
+  const usuario = await Usuario.findById(participanteId);
+
+
+
+
+}
+
 module.exports = {
   crearEvento,
   obtenerEventos,
   obtenerEventoPorId,
   // actualizarEvento,
   // eliminarEvento,
+  registrarParticipante
 };

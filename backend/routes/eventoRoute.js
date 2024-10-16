@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const eventoController = require('../controllers/eventoController');
-const {authMiddleware, validateLogin, validateRegister} = require('../middlewares/authMiddleware');
+const {authMiddleware} = require('../middlewares/authMiddleware');
 
 router.use(authMiddleware)
 // Crear un evento (requiere autenticación)
@@ -18,5 +18,7 @@ router.get('/', eventoController.obtenerEventos);
 
 // // Eliminar un evento (requiere autenticación)
 // router.delete('/:id', eventoController.eliminarEvento);
+
+router.post('/:eventoId-:participanteId', ,eventoController.registrarParticipante);
 
 module.exports = router;
