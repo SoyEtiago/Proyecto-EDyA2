@@ -1,22 +1,26 @@
-//import { useState } from 'react';
-//import Login from './page/Login';
-//import HomePage from './page/HomePage';
-import Informacion from './page/infoEvento';
-import 'bootstrap/dist/css/bootstrap.min.css';
-function App() {
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./page/HomePage";
+import Informacion from "./page/infoEvento";
+import IniciarSesion from "./page/Login";
+import Registro from "./page/Register";
+import Layout from "./Layouts/Layout";
 
-  return (
-    <div>
-      <Informacion/>
-    </div>
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const App= () => {
+   return(
+    <BrowserRouter>
+       <Layout>
+        <Routes>
+          <Route path="/HomePage" element={<HomePage/>} />
+          <Route path="/Login" element={<IniciarSesion />} />
+          <Route path="/infoEvento" element={<Informacion />} />
+          <Route path="/Register" element={<Registro />} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
   );
 }
-//const [isLoggedIn, setIsLoggedIn] = useState(false);
-//{isLoggedIn ? (
-//  <h1>Bienvenido, has iniciado sesión correctamente!</h1>
-//) : (
-//  <Login onLogin={setIsLoggedIn} />
-//)}
 
 
 export default App;
